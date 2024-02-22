@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1j4idq0jv2nj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_puom2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"entrance",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": null
+}],
+"loop": true,
+"name": &"exit",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h0wl3"]
+size = Vector2(12, 12)
+
+[node name="Door" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_puom2")
+animation = &"entrance"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_h0wl3")

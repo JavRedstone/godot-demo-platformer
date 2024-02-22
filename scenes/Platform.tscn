@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://dv424eqr7q1km"]
+
+[ext_resource type="Texture2D" uid="uid://bu7t4ddjkeibh" path="res://sprites/platform/stepped/1.png" id="1_lhpvy"]
+[ext_resource type="Script" path="res://scripts/platform.gd" id="1_qr66s"]
+[ext_resource type="Texture2D" uid="uid://b0xjp2odrwcj2" path="res://sprites/platform/unstepped/1.png" id="2_k28ys"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vj228"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_lhpvy")
+}],
+"loop": true,
+"name": &"stepped",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_k28ys")
+}],
+"loop": true,
+"name": &"unstepped",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_06lig"]
+size = Vector2(30, 3)
+
+[node name="Platform" type="RigidBody2D" groups=["platforms"]]
+gravity_scale = 0.0
+lock_rotation = true
+freeze = true
+script = ExtResource("1_qr66s")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_vj228")
+animation = &"unstepped"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_06lig")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_06lig")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

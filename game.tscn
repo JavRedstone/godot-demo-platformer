@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://cpodmy6bl7hso"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_qcpf7"]
+[ext_resource type="PackedScene" uid="uid://d1ukhvlle1dxa" path="res://scenes/Floor.tscn" id="2_easc4"]
+[ext_resource type="PackedScene" uid="uid://dv424eqr7q1km" path="res://scenes/Platform.tscn" id="3_3my6k"]
+[ext_resource type="PackedScene" uid="uid://cwi2pt5cwbypk" path="res://scenes/Player.tscn" id="3_uok1c"]
+[ext_resource type="Texture2D" uid="uid://ctrh8374sf7cl" path="res://sprites/door/1.png" id="5_u82a6"]
+
+[sub_resource type="Gradient" id="Gradient_2yeus"]
+offsets = PackedFloat32Array(0, 0.512727)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x6gwx"]
+gradient = SubResource("Gradient_2yeus")
+width = 2048
+height = 2048
+fill_from = Vector2(1, 0)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eekxs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_u82a6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qent6"]
+size = Vector2(12, 12)
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_qcpf7")
+floor_scene = ExtResource("2_easc4")
+player_scene = ExtResource("3_uok1c")
+platform_scene = ExtResource("3_3my6k")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_x6gwx")
+
+[node name="Door" type="Area2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Door"]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_eekxs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+shape = SubResource("RectangleShape2D_qent6")
+
+[connection signal="body_entered" from="Door" to="." method="_on_door_body_entered"]
+[connection signal="body_exited" from="Door" to="." method="_on_door_body_exited"]
